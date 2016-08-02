@@ -1,3 +1,16 @@
+/*
+ * timer.js
+ * Exampe of usage:
+ * script timer
+ * select * from employees
+ * ...
+ * ..
+ * 107 rows selected. 
+ *
+ * Elapsed Time:581
+ */
+
+
 // SQLCL's Command Registry
 var CommandRegistry = Java.type("oracle.dbtools.raptor.newscriptrunner.CommandRegistry");
 
