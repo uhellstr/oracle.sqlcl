@@ -1,3 +1,14 @@
+/*
+
+  How to use:
+  Example:
+  SQL> script kill
+  SQL> kill hr
+  Killing:129,62113
+
+  System kill altered.
+
+*/
 // SQLCL's Command Registry
 var CommandRegistry = Java.type("oracle.dbtools.raptor.newscriptrunner.CommandRegistry");
 
