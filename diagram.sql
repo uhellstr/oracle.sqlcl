@@ -1,4 +1,3 @@
-conn sys@xe as sysdba
 set sqlformat ansiconsole
 with ts_details as
 (
