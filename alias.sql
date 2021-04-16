@@ -280,3 +280,21 @@ WHERE   A.event# = b.event# AND
         sample_time < SYSDATE AND
         b.wait_class = 'User I/O')
 ORDER BY 6 desc;
+
+alias plugdatabases = select con_id
+       ,creation_time
+       ,name
+       ,open_mode
+       ,restricted
+       ,open_time
+       ,total_size
+       ,recovery_status
+       ,application_root
+       ,application_pdb
+from v$pdbs
+order by creation_time,name;
+
+alias num_pdbs = select count(*)
+from v$pdbs
+where open_mode = 'READ WRITE';
+
