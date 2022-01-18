@@ -323,3 +323,8 @@ FROM   (
         WHERE  a.tablespace_name = b.tablespace_name
        )
 ORDER BY tablespace_name;
+
+-- From 19c and above
+alias display_cursor=select * from dbms_xplan.display_cursor();
+
+alias display_hints=select * from dbms_xplan.display_cursor(format=>'-PREDICATE +HINT_REPORT');
