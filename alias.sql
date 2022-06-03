@@ -1,4 +1,27 @@
 set echo off
+
+alias my_session=
+with my_session as (
+ select sys_context ('userenv', 'session_user') as schema_name from dual
+)
+select 
+        s. sid
+       ,s.serial#
+       ,s.username
+       ,s.osuser
+       ,s.module
+       ,case
+          when s.status = 'ACTIVE' then
+            s.last_call_et
+          else
+            null
+        end "Seconds in Wait"
+       ,c.command_name 
+       ,s.logon_time
+from v$session s
+inner join my_session m on s.username = m.schema_name
+inner join v$sqlcommand c on c.command_type = s.command;
+
 alias monitor=
 with vs as (
   select
