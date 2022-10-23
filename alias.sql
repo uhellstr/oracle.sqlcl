@@ -1,5 +1,8 @@
 set echo off
 
+alias hostname=
+select host_name,instance_name,version_full,startup_time,status,database_status from v$instance;
+
 alias my_session=
 with my_session as (
  select sys_context ('userenv', 'session_user') as schema_name from dual
