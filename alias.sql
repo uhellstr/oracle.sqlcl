@@ -350,6 +350,12 @@ FROM   (
        )
 ORDER BY tablespace_name;
 
+alias check_os_process = select a.sid, a.serial#,a.username, a.osuser, b.spid
+from v$session a, v$process b
+where a.paddr= b.addr
+and a.sid= :sid
+order by a.sid;
+
 -- From 19c and above
 alias display_cursor=select * from dbms_xplan.display_cursor();
 
