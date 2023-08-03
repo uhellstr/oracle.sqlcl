@@ -256,6 +256,9 @@ WHERE
 AND
     ROW# <= :high;
 
+alias views =
+select view_name from user_views;
+
 alias wait =
 SELECT  WAIT_CLASS,
         TOTAL_WAITS,
