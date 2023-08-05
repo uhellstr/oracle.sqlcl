@@ -359,6 +359,52 @@ where a.paddr= b.addr
 and a.sid= :sid
 order by a.sid;
 
+alias proxy_session= select count(*)
+       ,s.sid
+       ,s.serial#
+       ,pu.proxy as proxy_user
+       ,s.username
+       ,s.status
+       ,s.server
+       ,s.schemaname
+       ,s.osuser
+       ,s.process
+       ,s.machine
+       ,s.port
+       ,s.terminal
+       ,s.program
+       ,s.type
+       ,s.sql_address
+       ,s.sql_id
+       ,s.module
+       ,s.action
+from v$session s
+inner join v$session_connect_info sci
+on s.sid = sci.sid
+inner join proxy_users pu
+on s.username = pu.client
+where    s.serial# = sci.serial#
+  and    sci.authentication_type = 'PROXY'
+group by s.sid
+         ,s.serial#
+         ,pu.proxy
+         ,s.username
+         ,s.osuser
+         ,s.status
+         ,s.server
+         ,s.schemaname
+         ,s.process
+         ,s.machine
+         ,s.port
+         ,s.terminal
+         ,s.program
+         ,s.type
+         ,s.sql_address
+         ,s.sql_id
+         ,s.module
+         ,s.action
+having count(*) > 1;
+
 -- From 19c and above
 alias display_cursor=select * from dbms_xplan.display_cursor();
 
