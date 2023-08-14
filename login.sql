@@ -12,3 +12,4 @@ SET highlighting comment background white
 SET highlighting comment foreground black
 set statusbar cursor dbid editmode git java linecol memory timing username txn
 SET sqlprompt "@|GREEN  ' '_user|@ '@' @|RED  _connect_identifier|@ >"
+define EDITOR=emacs
