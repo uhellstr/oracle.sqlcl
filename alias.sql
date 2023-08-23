@@ -8,6 +8,19 @@ alias code=select name
 from user_source
 order by name,type asc;
 
+alias changelog=
+select author
+       ,filename
+       ,dateexecuted
+       ,orderexecuted
+       ,exectype
+       ,comments
+       ,tag
+       ,liquibase
+       ,labels
+from databasechangelog
+order by dateexecuted asc;
+
 alias my_session=
 with my_session as (
  select sys_context ('userenv', 'session_user') as schema_name from dual
