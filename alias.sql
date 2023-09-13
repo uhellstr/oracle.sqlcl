@@ -21,6 +21,10 @@ select author
 from databasechangelog
 order by dateexecuted asc;
 
+alias stalestats=select table_name,owner 
+from  dba_tab_statistics 
+where stale_stats = 'YES' or stale_stats is null;
+
 alias my_session=
 with my_session as (
  select sys_context ('userenv', 'session_user') as schema_name from dual
