@@ -3,7 +3,7 @@ set echo off
 alias hostname=
 select host_name,instance_name,version_full,startup_time,status,database_status from v$instance;
 
-alias listusers = select *
+alias listusers_dba = select *
 from dba_users order by username;
 
 alias stale_stats_dba =with user_list as
@@ -32,7 +32,7 @@ alias code=select name
 from user_source
 order by name,type asc;
 
-alias changelog=
+alias changelog_lb=
 select author
        ,filename
        ,dateexecuted
@@ -67,7 +67,7 @@ from v$session s
 inner join my_session m on s.username = m.schema_name
 inner join v$sqlcommand c on c.command_type = s.command;
 
-alias monitor=
+alias monitor_dba=
 with vs as (
   select
     rownum rnum,
@@ -142,7 +142,7 @@ alias explain_sql = SELECT * FROM TABLE(DBMS_XPLAN.display_cursor(sql_id=>:sqlid
                                       format=>'ALLSTATS LAST +cost +bytes  +outline'));
 alias cls=clear screen
 
- alias top=
+alias top_dba=
 SELECT
     SQL, SQL_ID, CPU_SECONDS_FORM CPU, ELAPSED_SECONDS_FORM ELAPSED, DISK_READS, BUFFER_GETS, EXECUTIONS_FORM EXECS, MODULE, LAST_ACTIVE_TIME_FORM
 FROM
@@ -369,7 +369,7 @@ alias num_pdbs = select count(*)
 from v$pdbs
 where open_mode = 'READ WRITE';
 
-alias tbs_free = SELECT tablespace_name,
+alias tbs_free_dba = SELECT tablespace_name,
        size_mb,
        free_mb,
        max_size_mb,
@@ -395,13 +395,13 @@ FROM   (
        )
 ORDER BY tablespace_name;
 
-alias check_os_process = select a.sid, a.serial#,a.username, a.osuser, b.spid
+alias check_os_process_dba = select a.sid, a.serial#,a.username, a.osuser, b.spid
 from v$session a, v$process b
 where a.paddr= b.addr
 and a.sid= :sid
 order by a.sid;
 
-alias proxy_session= select count(*)
+alias proxy_session_dba= select count(*)
        ,s.sid
        ,s.serial#
        ,pu.proxy as proxy_user
