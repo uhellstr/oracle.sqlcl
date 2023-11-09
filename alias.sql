@@ -3,6 +3,30 @@ set echo off
 alias hostname=
 select host_name,instance_name,version_full,startup_time,status,database_status from v$instance;
 
+alias listusers = select *
+from dba_users order by username;
+
+alias stale_stats_dba =with user_list as
+(
+select username
+from dba_users
+where account_status = 'OPEN'
+  and oracle_maintained = 'N' and username not like 'EGNA%'
+  and username not in ('SYS','SYSTEM')
+)
+select stats.owner,
+       stats.table_name,
+       stats.object_type,
+       stats.last_analyzed,
+       stats.global_stats,
+       stats.user_stats,
+       stats.stale_stats
+from dba_tab_statistics stats
+inner join user_list dbu
+on stats.owner = dbu.username
+where last_analyzed is null or stale_stats is null or stale_stats = 'YES'
+order by stats.owner,stats.table_name asc;
+
 alias code=select name
        ,type
 from user_source
