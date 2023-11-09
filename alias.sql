@@ -1,5 +1,7 @@
 set echo off
 
+alias date_setting = alter session set nls_date_format = 'RRRR-MM-DD HH24:MI:SS';
+
 alias hostname=
 select host_name,instance_name,version_full,startup_time,status,database_status from v$instance;
 
