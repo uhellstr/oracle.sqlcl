@@ -2,6 +2,40 @@ set echo off
 
 alias date_setting = alter session set nls_date_format = 'RRRR-MM-DD HH24:MI:SS';
 
+alias statspack_db = with dbinfo as
+(
+  select d.dbid            as dbid
+     , d.name              as name
+     , i.instance_number   as instance_number
+     , i.instance_name     as instance_name
+  from v$database d
+       ,v$instance i
+)
+select s.snap_id
+       ,s.dbid
+       ,s.instance_number
+       ,s.snap_time
+       ,s.startup_time
+       ,s.snap_level
+       ,s.ucomment
+       ,s.snapshot_exec_time_s
+       ,s.baseline
+       ,di.parallel
+       ,di.version
+       ,di.db_name
+       ,di.instance_name
+       ,di.host_name
+       ,di.platform_name
+from stats$snapshot s
+inner join stats$database_instance di
+on di.startup_time     = s.startup_time
+inner join dbinfo db
+on s.dbid               = db.dbid
+and di.dbid             = db.dbid
+and s.instance_number   = db.instance_number
+and di.instance_number  = db.instance_number
+order by s.snap_id asc;
+
 alias hostname=
 select host_name,instance_name,version_full,startup_time,status,database_status from v$instance;
 
