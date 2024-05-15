@@ -13,3 +13,4 @@ SET highlighting comment foreground black
 set statusbar cursor dbid editmode git java linecol memory timing username txn
 SET sqlprompt "@|GREEN  ' '_user|@ '@' @|RED  _connect_identifier|@ >"
 define EDITOR=emacs
+format rules /home/uhellstr/orascript/format.xml
